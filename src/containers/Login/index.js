@@ -4,8 +4,9 @@ import { TextField, Typography, Button } from "@material-ui/core";
 import Divider from '@material-ui/core/Divider';
 import { connect } from "react-redux";
 import styled from "styled-components";
-import CardMedia from '@material-ui/core/CardMedia';
 import logo from "./logo.png"
+import { push } from 'connected-react-router';
+import { routes } from '../Router';
 
 /* const Containers = styled.div`
     height: 100vh;
@@ -122,7 +123,9 @@ const LoginPage = props => {
                 <Typography variant="h6"> 
                   Não tem uma conta?   
                 </Typography>
-                <Buttons type="submit" variant="contained" color="secondary" > INSCREVER-SE NO SPOTENU </Buttons>
+                <Buttons type="button" variant="contained" color="secondary" onClick={props.goToSignup}> 
+                    INSCREVER-SE NO SPOTENU 
+                </Buttons>
             </Forms>
         </div>
     )
@@ -130,6 +133,7 @@ const LoginPage = props => {
 
 const mapDispatchToProps = dispatch => ({
 /*     login: (credential, password) => dispatch(login(credential, password)) */
+    goToSignup: () => dispatch(push(routes.signup)),
 })
 
-export default connect (null, mapDispatchToProps)(LoginPage)
+export default connect(null, mapDispatchToProps)(LoginPage)

@@ -1,6 +1,7 @@
 import axios from 'axios'; 
-
-const baseUrl = 'xupeta'
+import {routes} from '../containers/Router'
+import { push } from 'connected-react-router';
+/* const baseUrl = 'xupeta'
 
 export const login = (credential, password) => async (dispatch) => {
 
@@ -21,4 +22,8 @@ export const login = (credential, password) => async (dispatch) => {
         //Ver um jeito de resposta melhor. 
         alert('Por favor, tentar novamente.')
     }
+} */
+
+export const teste = () => async (dispatch) => {
+    dispatch(push(routes.signup))
 }
