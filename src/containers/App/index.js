@@ -11,7 +11,7 @@ import { routerMiddleware } from "connected-react-router";
 import styled from "styled-components"; 
 /* import Card from '@material-ui/core/Card'; */
 /* import CardContent from '@material-ui/core/CardContent'; */
-import AppBar from '@material-ui/core/AppBar'; 
+/* import AppBar from '@material-ui/core/AppBar';  */
 /* import {classes} from '../../style/theme'; */
 
 const Container = styled.div`
