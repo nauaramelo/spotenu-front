@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 /* import { login } from '../../actions/login'; */
 import { TextField, Typography, Button } from "@material-ui/core";
 import Divider from '@material-ui/core/Divider';
@@ -7,6 +7,8 @@ import styled from "styled-components";
 import logo from "./logo.png"
 import { push } from 'connected-react-router';
 import { routes } from '../Router';
+import { login } from '../../actions/login'
+import {Link, useHistory} from 'react-router-dom'
 
 /* const Containers = styled.div`
     height: 100vh;
@@ -74,18 +76,27 @@ const Head = styled.div`
 `
 
 const LoginPage = props => {
-    const [state, setState] = useState({
-        credential: "",
-        password: ""
-    })
+    const [form, setForm] = useState({
+        emailOrNickname: '',
+        password: ''
+      })
 
-    const handleFieldChange = (event) => {
-        setState(event.target.password)
+    const history = useHistory()
+
+    useEffect(() => {
+        if (window.localStorage.getItem('token')) {
+          history.push('/home')
+        }
+    }, [history])
+
+    const onChangeField = (event) => {
+        const fieldName = event.target.name
+        setForm({...form, [fieldName]: event.target.value})
     }
 
     const onSubmitForm = (event) => {
         event.preventDefault();
-/*         props.login(credential, password) */
+        props.login(form.emailOrNickname, form.password)
         //Lembrar de mudar quando houver outra action
     }
 
@@ -103,20 +114,20 @@ const LoginPage = props => {
                   Para continuar, faça login no Spotenu.  
                 </Typography>
                 <Textfields 
-                    variant="outlined"
-                    onChange={handleFieldChange}
-                    name="credential"
-                    type="text"
-                    label="Email ou Nickname"
-                    value={state.credential}
+                    variant={"outlined"}
+                    onChange={onChangeField}
+                    name={"emailOrNickname"}
+                    type={"text"}
+                    label={"Email ou Nickname"}
+                    value={form.emailOrNickname}
                 />
                 <Textfields 
-                    variant="outlined"
-                    onChange={handleFieldChange}
-                    name="password"
-                    type="password"
-                    label="Senha"
-                    value={state.password}
+                    variant={"outlined"}
+                    onChange={onChangeField}
+                    name={"password"}
+                    type={"password"}
+                    label={"Senha"}
+                    value={form.password}
                 />
                 <Buttons type="submit" variant="contained" color="primary"> ENTRAR </Buttons>
                 <Dividers variant="middle" />
@@ -132,8 +143,8 @@ const LoginPage = props => {
 }
 
 const mapDispatchToProps = dispatch => ({
-/*     login: (credential, password) => dispatch(login(credential, password)) */
-    goToSignup: () => dispatch(push(routes.signup)),
+    login: (credential, password) => dispatch(login(credential, password)),
+    goToSignup: () => dispatch(push(routes.signup))
 })
 
 export default connect(null, mapDispatchToProps)(LoginPage)
