@@ -10,6 +10,7 @@ import { generateReducers } from "../../reducers";
 import { routerMiddleware } from "connected-react-router";
 import styled from "styled-components";
 import Menu from "../Menu";
+import Header from '../Header'
 
 const Divizona = styled.div`
   display: grid;
@@ -32,11 +33,11 @@ const store = createStore(generateReducers(history), compose(...middlewares));
 
 const App = props => {
   const [state, setState] = useState({
-    isLogged: false
+    isLogged: window.localStorage.getItem('token') || store.getState()?.login?.logged
   })
 
   store.subscribe(() => { 
-    setState({ isLogged: store.getState()?.login?.logged })
+    setState({ isLogged: store.getState()?.login?.logged || window.localStorage.getItem('token') })
   })
 
   const renderPagesWithUserLogged = () => {
@@ -44,6 +45,7 @@ const App = props => {
       <Divizona>
         <Menu />
         <main>
+          <Header />
           <Router history={history} />
         </main>
       </Divizona>
