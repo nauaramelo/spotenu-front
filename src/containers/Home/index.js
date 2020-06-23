@@ -1,20 +1,10 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from "react-redux";
 import styled from 'styled-components';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { setLogged } from '../../actions/login'
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Divider from '@material-ui/core/Divider';
+import { push } from 'connected-react-router';
+import { routes } from '../Router';
 
-const InputSearch = styled(InputBase)`
-  box-sizing: 100vh;
-  width: 70vh;
-  height: 10vh;
-  color: white;
-  background-color: transparent;
-`
 const Playlists = styled.div`
   padding-top: 6vh;
   display: grid;
@@ -23,37 +13,17 @@ const Playlists = styled.div`
   text-align: center;
 `
 
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
-const DividerHead = styled(Divider)`
-  background-color: whitesmoke;
-`
 
 const HomePage = props => {
   useEffect(() => {
-    console.log('chegou?')
-
-    if (window.localStorage.getItem('token')) {
-      props.setLogged(window.localStorage.getItem('token'))
+    if (!window.localStorage.getItem('token')) {
+      props.setLogged(false)
+      props.goToLogin()
     }
   }, [])
 
   return (
     <Fragment>
-      <Header>
-        <InputSearch
-          placeholder="Buscar"
-            startAdornment={
-              <InputAdornment position="start">
-                <SearchIcon fontSize="large"/>
-              </InputAdornment>
-            }
-        />
-        <ExitToAppIcon fontSize="large"/>
-      </Header>
-      <DividerHead variant="fullWidth"/>
       <Playlists>
         Bem vindo ao Spotenu! 
       </Playlists>
@@ -62,7 +32,8 @@ const HomePage = props => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  setLogged: (logged) => dispatch(setLogged(logged))
+  setLogged: (logged) => dispatch(setLogged(logged)),
+  goToLogin: () => dispatch(push(routes.root))
 })
 
 export default connect(null, mapDispatchToProps)(HomePage)
