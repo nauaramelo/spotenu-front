@@ -3,8 +3,7 @@ import {routes} from '../containers/Router';
 import { push } from 'connected-react-router';
 
 export const setLogged = (logged) => {
-    console.log(logged)
-    console.log(window.localStorage.getItem('token'))
+    console.log('setLogged', logged)
 
     return {
         type: "SET_LOGGED",
@@ -19,8 +18,9 @@ export const login = (credential, password) => async (dispatch) => {
         const token = 'oi'
 
         window.localStorage.setItem('token', token)
-        window.localStorage.setItem('role', 'Band')
-        
+        window.localStorage.setItem('role', 'Admin')
+
+        dispatch(setLogged(true))
         dispatch(push(routes.home))
     } catch (error) {
         //Ver um jeito de resposta melhor. 
