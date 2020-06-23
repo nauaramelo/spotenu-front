@@ -22,68 +22,57 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import DeleteIcon from '@material-ui/icons/Delete';
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-
+import { routes } from '../Router';
+import { push } from 'connected-react-router';
 
 const features = [
   {
     name: 'Cadastrar Administrador',
     icon: <SupervisorAccountIcon />,
-    ruleForRender: "Admin"
+    ruleForRender: 'Admin',
+    goTo: routes.signupAdm
   },
   {
     name: 'Aprovar Bandas',
     icon: <CheckCircleIcon />,
-    ruleForRender: "Admin"
+    ruleForRender: 'Admin',
+    goTo: ''
   },
   {
     name: 'Adicionar Gêneros',
     icon: <PlaylistAddCheckIcon />,
-    ruleForRender: "Admin"
+    ruleForRender: 'Admin',
+    goTo: ''
   },
   {
     name: 'Bloquear Usuario',
     icon: <PersonAddDisabledIcon />,
-    ruleForRender: "Admin"
+    ruleForRender: 'Admin',
+    goTo: ''
   },
   {
-    name: 'Criar Album',
+    name: 'Album',
     icon: <AlbumIcon />,
-    ruleForRender: "Band"
+    ruleForRender: 'Band',
+    goTo: ''
   },
   {
-    name: 'Editar Album',
-    icon: <EditAttributesIcon />,
-    ruleForRender: "Band"
-  },
-  {
-    name: 'Deletar Album',
-    icon: <DeleteForeverIcon />,
-    ruleForRender: "Band"
-  },
-  {
-    name: 'Criar Música',
+    name: 'Música',
     icon: <LibraryMusicIcon />,
-    ruleForRender: "Band"
-  },
-  {
-    name: 'Editar Música',
-    icon: <EditIcon />,
-    ruleForRender: "Band"
-  },
-  {
-    name: 'Deletar Música',
-    icon: <DeleteIcon/>,
-    ruleForRender: "Band"
+    ruleForRender: 'Band',
+    goTo: ''
   },
   {
     name: 'Música',
     icon: <MusicNoteIcon/>,
-    ruleForRender: "Listener"
+    ruleForRender: 'Listener',
+    goTo: ''
   },
   {
     name: 'Gênero',
     icon: <QueueMusicIcon/>,
-    ruleForRender: "Listener"
+    ruleForRender: 'Listener',
+    goTo: ''
   },
 ]
 
@@ -106,26 +95,32 @@ const TypographyCustom = styled(Typography)`
   color: white;
 `
 
-const typesUser = "Band"
+const typesUser = 'Admin' || window.localStorage.getItem('role')
 
 const MenuPage = props => {
+
+  const goTo = (route) => {
+    props.goTo(route)
+  }
+
   return (
     <Lists>
         <Logo src={logo2}/>
-        {features.map((feature, index) => (
-        feature.ruleForRender === typesUser ? 
-        <ListItem button key={feature.name}>
-            <ListIcons>{feature.icon} </ListIcons>
-            <ListItemText primary={<TypographyCustom> {feature.name} </TypographyCustom>} />
-        </ListItem>
-        : null
-        ))}
+        { features.map((feature, index) => (
+          feature.ruleForRender === typesUser ?
+            <ListItem button key={feature.name} onClick={() => goTo(feature.goTo)}>
+              <ListIcons>{feature.icon} </ListIcons>
+                <ListItemText primary={<TypographyCustom> {feature.name} </TypographyCustom>} />
+              </ListItem>
+          :
+            null
+        )) }
     </Lists>
   )
 }
 
 const mapDispatchToProps = dispatch => ({
-
+  goTo: (route) => dispatch(push(route))
 })
 
 export default connect(null, mapDispatchToProps)(MenuPage)

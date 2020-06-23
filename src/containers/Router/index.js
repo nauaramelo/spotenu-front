@@ -4,13 +4,15 @@ import { Switch, Route } from "react-router-dom";
 import LoginPage from '../Login';
 import SignUpPage from '../SignUp';
 import HomePage from '../Home';
+import SignUpAdminPage from '../SignUpAdmin';
 
 export const routes = {
     root: "/",
     login: "/login",
     signup: "/signup",
     home: "/home",
-    signupAdm: "/signupadm"
+    signupAdm: "/signupadm",
+
 }
 
 function Router(props) {
@@ -20,6 +22,7 @@ function Router(props) {
                 <Route exact path={routes.root} component={LoginPage}/>
                 <Route exact path={routes.signup} component={SignUpPage}/>
                 <Route exact path={routes.home} component={HomePage}/>
+                <Route exact path={routes.signupAdm} component={SignUpAdminPage}/>
             </Switch>
         </ConnectedRouter>
     )
