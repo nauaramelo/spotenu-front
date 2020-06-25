@@ -24,7 +24,7 @@ const HomePage = props => {
 
   return (
     <Fragment>
-      <Playlists>
+      <Playlists >
         Bem vindo ao Spotenu! 
       </Playlists>
     </Fragment>

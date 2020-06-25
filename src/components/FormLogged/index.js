@@ -1,6 +1,6 @@
 import React from 'react'; 
 import TextFieldTest from '../../components/TextFieldFormLogged';
-import { TextField,Typography, Button } from "@material-ui/core";
+import { TextField,Typography, Button, MenuItem } from "@material-ui/core";
 import styled from 'styled-components';
 
 
@@ -35,7 +35,9 @@ const TypographyCustom = styled(Typography)`
 const FormLogged = (props) => {
     const handleFieldChange = (event) => {
         const fieldName = event.target.name
+        console.log('state antes', props.state)
         props.setState({...props.state, [fieldName]: event.target.value})
+        console.log('state depois', props.state)
     }
 
     return(
@@ -43,16 +45,29 @@ const FormLogged = (props) => {
             <TypographyCustom variant="h5" >
                 {props.featureTitle}
             </TypographyCustom>
-            { props.fields.map(field => (
-                <TextFieldTest key={field.name}
-                    variant="outlined"
-                    onChange={handleFieldChange}
-                    name={field.name}
-                    type={field.type}
-                    label={field.label}
-                    value={props.state[`${field.name}`]}
-                    required={field.required}
-                />
+            { props.fields && props.fields.map(field => (
+                field.type === 'text' ?
+                    <TextFieldTest key={field.name}
+                        variant="outlined"
+                        onChange={handleFieldChange}
+                        name={field.name}
+                        type={field.type}
+                        label={field.label}
+                        value={props.state[`${field.name}`]}
+                        required={field.required}
+                    />
+                :
+                    <TextFieldTest key={field.name}
+                        select={true}
+                        variant="outlined"
+                        onChange={handleFieldChange}
+                        name={field.name}
+                        type={field.type}
+                        label={field.label}
+                        value={props.state[`${field.name}`]}
+                        required={field.required}
+                        options={field.options}
+                    />
             ))}
 
             <Buttons variant="contained" color="primary" onClick={props.actionButton}>

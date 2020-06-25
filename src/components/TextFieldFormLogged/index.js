@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import { TextField, MenuItem } from '@material-ui/core';
 import styled from 'styled-components';
 
 const styles = theme => ({
@@ -39,6 +39,7 @@ const TextFieldFormLogged = (props) => {
 
     return (
         <Text
+          select={props.select || false}
           label={props.label}
           value={props.value}
           onChange={props.onChange}
@@ -61,7 +62,11 @@ const TextFieldFormLogged = (props) => {
               notchedOutline: classes.notchedOutline,
             }
           }}
-        />
+        >
+          { props.options && props.options.map(option => {
+            return (<MenuItem key={option.id} value={option.id}> {option.name} </MenuItem>)
+          }) }
+        </Text>
     );
 }
 

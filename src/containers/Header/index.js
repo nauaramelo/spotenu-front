@@ -25,6 +25,9 @@ const InputSearch = styled(InputBase)`
   color: white;
   background-color: transparent;
 `
+const ExitToAppIconS = styled(ExitToAppIcon)`
+  height: 10vh;
+`
 
 const HeaderPage = (props) => {
     const logout = () => {
@@ -40,11 +43,11 @@ const HeaderPage = (props) => {
                 placeholder="Buscar"
                     startAdornment={
                     <InputAdornment position="start">
-                        <SearchIcon fontSize="large"/>
+                      <SearchIcon fontSize="large"/>
                     </InputAdornment>
                     }
                 />
-                <ExitToAppIcon fontSize="large" onClick={logout}/>
+                <ExitToAppIconS fontSize="large" onClick={logout}/>
             </Header>
             <DividerHead variant="fullWidth"/>
       </Fragment>

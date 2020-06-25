@@ -7,19 +7,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import logo2 from "./logo2.png"
 import QueueMusicIcon from '@material-ui/icons/QueueMusic';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 import AlbumIcon from '@material-ui/icons/Album';
-import EditIcon from '@material-ui/icons/Edit';
-import EditAttributesIcon from '@material-ui/icons/EditAttributes';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import DeleteIcon from '@material-ui/icons/Delete';
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { routes } from '../Router';
@@ -36,50 +30,70 @@ const features = [
     name: 'Aprovar Bandas',
     icon: <CheckCircleIcon />,
     ruleForRender: 'Admin',
-    goTo: ''
+    goTo: routes.approveBand
+  },
+  {
+    name: 'Listar Gêneros',
+    icon: <PlaylistAddCheckIcon />,
+    ruleForRender: 'Admin',
+    goTo: routes.listGenre
   },
   {
     name: 'Adicionar Gêneros',
-    icon: <PlaylistAddCheckIcon />,
+    icon: <PlaylistAddIcon/>,
     ruleForRender: 'Admin',
-    goTo: ''
+    goTo: routes.addGenre
   },
   {
     name: 'Bloquear Usuario',
     icon: <PersonAddDisabledIcon />,
     ruleForRender: 'Admin',
-    goTo: ''
+    goTo: routes.blockUser
   },
   {
     name: 'Album',
     icon: <AlbumIcon />,
     ruleForRender: 'Band',
-    goTo: ''
+    goTo: routes.addAlbum
   },
   {
-    name: 'Música',
+    name: 'Músicas',
     icon: <LibraryMusicIcon />,
     ruleForRender: 'Band',
-    goTo: ''
+    goTo: routes.listMusic
+  },
+  {
+    name: 'Adicionar Música',
+    icon: <QueueMusicIcon />,
+    ruleForRender: 'Band',
+    goTo: routes.addMusic
   },
   {
     name: 'Música',
     icon: <MusicNoteIcon/>,
     ruleForRender: 'Listener',
-    goTo: ''
+    goTo: routes.listMusicUser
   },
   {
     name: 'Gênero',
     icon: <QueueMusicIcon/>,
     ruleForRender: 'Listener',
-    goTo: ''
+    goTo: routes.listGenre
   },
 ]
+
+const Head = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 15vh;
+  margin-top: 2vh;
+  gap: 1vh;
+`
 
 const Logo = styled.img`
   height: 9vh;
   /* width: 12vh; */
-  margin-left: 6vh;
+  /* margin-left: 6vh; */
 `
 
 const Lists = styled(List)`
@@ -95,7 +109,15 @@ const TypographyCustom = styled(Typography)`
   color: white;
 `
 
-const typesUser = 'Admin' || window.localStorage.getItem('role')
+const TypographyLogo = styled(Typography)`
+  color: #1ed760;
+  margin-top: 1.5vh;
+  font-size: 5vh;
+  margin-left: 1vh;
+  font-weight: bold;
+`
+
+const typesUser = 'Listener' || window.localStorage.getItem('role')
 
 const MenuPage = props => {
 
@@ -105,7 +127,12 @@ const MenuPage = props => {
 
   return (
     <Lists>
-        <Logo src={logo2}/>
+        <Head>
+        <Logo src={logo2}/> 
+        <TypographyLogo> 
+          Spotenu 
+        </TypographyLogo>
+        </Head>
         { features.map((feature, index) => (
           feature.ruleForRender === typesUser ?
             <ListItem button key={feature.name} onClick={() => goTo(feature.goTo)}>
