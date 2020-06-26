@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
@@ -8,38 +8,18 @@ import { createBrowserHistory } from "history";
 import { createStore, applyMiddleware, compose } from "redux";
 import { generateReducers } from "../../reducers";
 import { routerMiddleware } from "connected-react-router";
-import styled from "styled-components"; 
-/* import Card from '@material-ui/core/Card'; */
-/* import CardContent from '@material-ui/core/CardContent'; */
-/* import AppBar from '@material-ui/core/AppBar';  */
-/* import {classes} from '../../style/theme'; */
+import styled from "styled-components";
+import Menu from "../Menu";
+import Header from '../Header'
 
-const Container = styled.div`
+const Divizona = styled.div`
   display: grid;
-  grid-template-areas: 
-  "header"
-  "main"
-  "footer";
+  grid-template-columns: 1fr 3fr;
+  min-height: 100vh;
+  color: white;
+  background-color: #212121; 
 `
 
-/* const Headers = styled(AppBar)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 10vh;
-  background-color: "#fafafa"
-` */
-
-/* const PageContent = styled(Card)`
-  width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-` */
-/* const Footer = styled(AppBar)`
-  display: flex;
-  align-items: center;
-  padding: 19px;
-` */
 export const history = createBrowserHistory();
 
 const middlewares = [
@@ -51,25 +31,41 @@ const middlewares = [
 
 const store = createStore(generateReducers(history), compose(...middlewares));
 
-export const App = () => (
-  <Provider store={store}>
-    <MuiThemeProvider theme={theme}>
-      <CssBaseline />
-      <Container>
- {/*       /*<Headers>
-        Spotenu
-      </Headers> */ }
+const App = props => {
+  const [state, setState] = useState({
+    isLogged: window.localStorage.getItem('token') || store.getState()?.login?.logged
+  })
+
+  store.subscribe(() => { 
+    setState({ isLogged: store.getState()?.login?.logged || window.localStorage.getItem('token') })
+  })
+
+  const renderPagesWithUserLogged = () => {
+    return (
+      <Divizona>
+        <Menu />
+        <main>
+          <Header />
+          <Router history={history} />
+        </main>
+      </Divizona>
+    )
+  }
+  
+  const renderPagesWithoutUserLogged = () => {
+    return (
       <Router history={history} />
-      {/* <PageContent className={classes.card}>
-        <CardContent>
-        </CardContent>
-      </PageContent> */
-/*        <Footer position="static" color="primary">
-        <strong> digite aqui um footer</strong>
-      </Footer> */} 
-      </Container>
-    </MuiThemeProvider>
-  </Provider>
-);
+    )
+  }
+
+  return (
+    <Provider store={store}>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        { state.isLogged ? renderPagesWithUserLogged() : renderPagesWithoutUserLogged() }
+      </MuiThemeProvider>
+    </Provider>
+  )
+}
 
 export default App;
