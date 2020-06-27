@@ -33,11 +33,11 @@ const store = createStore(generateReducers(history), compose(...middlewares));
 
 const App = props => {
   const [state, setState] = useState({
-    isLogged: window.localStorage.getItem('token') || store.getState()?.login?.logged
+    isLogged: window.localStorage.getItem('token') || store.getState().login.logged
   })
 
   store.subscribe(() => { 
-    setState({ isLogged: store.getState()?.login?.logged || window.localStorage.getItem('token') })
+    setState({ isLogged: store.getState().login.logged || window.localStorage.getItem('token') })
   })
 
   const renderPagesWithUserLogged = () => {
