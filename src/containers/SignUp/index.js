@@ -12,7 +12,9 @@ import { push } from "connected-react-router";
 import { routes } from "../Router";
 import Divider from '@material-ui/core/Divider';
 import { Link } from "react-router-dom";
-import theme from '../../style/theme'
+import theme from '../../style/theme';
+import { signup } from '../../actions/user';
+import { signupBand } from '../../actions/band';
 
 const Logo = styled.img`
     height: 8vh;
@@ -99,34 +101,52 @@ const SignUpPage = props => {
         nickname: "",
         email: "",
         password: "",
+        confirmPassword: "",
         description:"",
         typesUser: ""
     }) 
 
     const handleFieldChange = (event) => {
-        setState(state => ({
-            ...state,
-            [event.target.name]: event.target.value
-        }))
+        const fieldName = event.target.name
+        setState({...state, [fieldName]: event.target.value})
     }
 
     const onSubmitForm = (event) => {
         event.preventDefault();
+        
+        if (isValidPassword()) {
+           signup(state)
+        } else {
+            alert('Senhas diferentes.')
+        }
+    }
+
+    const signup = () => {
+
+        if (state.typesUser === typesUser.BAND) {
+            props.signupBand(state)
+        } else {
+            props.signup(state)
+        }
     }
 
     const shouldRender = () => {
         return state.typesUser === typesUser.BAND
     }
 
+    const isValidPassword = () => {
+        return state.password === state.confirmPassword
+    }
+
     const renderFieldsForBand = () => {
         return (<Textfields 
-                    variant="outlined"
-                    onChange={handleFieldChange}
-                    name="description"
-                    type="text"
-                    label="Escreva uma descrição."
-                    defaultValue="Escreva uma descrição."
-                    value={state.description}
+            variant="outlined"
+            onChange={handleFieldChange}
+            name="description"
+            type="text"
+            label="Escreva uma descrição."
+            defaultValue="Escreva uma descrição."
+            value={state.description}
         />)
     }
 
@@ -178,20 +198,20 @@ const SignUpPage = props => {
                     variant="outlined"
                     onChange={handleFieldChange}
                     name="password"
-                    type="text"
+                    type="password"
                     label="Crie uma senha."
                     value={state.password}
                 />
                 <Textfields 
                     variant="outlined"
                     onChange={handleFieldChange}
-                    name="password"
-                    type="text"
+                    name="confirmPassword"
+                    type="password"
                     label="Insira a senha novamente."
-                    value={state.password}
+                    value={state.confirmPassword}
                 />
                 { shouldRender() ? renderFieldsForBand() : null}
-                <Buttons type="button" variant="contained" color="primary" onClick={props.goToHome}> 
+                <Buttons type="submit" variant="contained" color="primary"> 
                     INSCREVER-SE
                 </Buttons>
                 <DivCustomLink>
@@ -206,8 +226,10 @@ const SignUpPage = props => {
 } 
 
 const mapDispatchToProps = dispatch => ({
+    signupBand: (form) => dispatch(signupBand(form)),
+    signup: (form) => dispatch(signup(form)),
     goToHome: () => dispatch(push(routes.home)),
-    goToLogin: () => dispatch(push(routes.root))
+    goToLogin: () => dispatch(push(routes.root)),
 })
 
 export default connect(null, mapDispatchToProps)(SignUpPage)

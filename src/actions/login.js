@@ -24,6 +24,15 @@ export const setRole = (role) => {
     }
 }
 
+export const setUserLoggedInApplication = (accessToken, role, dispatch) => {
+    window.localStorage.setItem('token', accessToken)
+    window.localStorage.setItem('role', role)
+
+    dispatch(setLogged(true))
+    dispatch(setRole(role)) 
+    dispatch(push(routes.home))
+}
+
 export const login = (nicknameOrEmail, password) => async (dispatch) => {
 
     const data = {
@@ -37,14 +46,11 @@ export const login = (nicknameOrEmail, password) => async (dispatch) => {
         const token = response.data.accessToken
         const role = response.data.role
     
-        window.localStorage.setItem('token', token)
-        window.localStorage.setItem('role', role)
-
-        dispatch(setLogged(true))
-        dispatch(setRole(role)) 
-        dispatch(push(routes.home))
+        setUserLoggedInApplication(token, role, dispatch)
+        
     } catch (error) {
         //Ver um jeito de resposta melhor. 
         alert('Por favor, tentar novamente.')
     }
+
 } 
