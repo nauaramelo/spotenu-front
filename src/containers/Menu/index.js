@@ -18,66 +18,67 @@ import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { routes } from '../Router';
 import { push } from 'connected-react-router';
+import { TYPE_USER } from './typeUserEnum'
 
 const features = [
   {
     name: 'Cadastrar Administrador',
     icon: <SupervisorAccountIcon />,
-    ruleForRender: 'Admin',
+    ruleForRender: TYPE_USER.ADMIN,
     goTo: routes.signupAdm
   },
   {
     name: 'Aprovar Bandas',
     icon: <CheckCircleIcon />,
-    ruleForRender: 'Admin',
+    ruleForRender: TYPE_USER.ADMIN,
     goTo: routes.approveBand
   },
   {
     name: 'Listar Gêneros',
     icon: <PlaylistAddCheckIcon />,
-    ruleForRender: 'Admin',
+    ruleForRender: TYPE_USER.ADMIN,
     goTo: routes.listGenre
   },
   {
     name: 'Adicionar Gêneros',
     icon: <PlaylistAddIcon/>,
-    ruleForRender: 'Admin',
+    ruleForRender: TYPE_USER.ADMIN,
     goTo: routes.addGenre
   },
   {
     name: 'Bloquear Usuario',
     icon: <PersonAddDisabledIcon />,
-    ruleForRender: 'Admin',
+    ruleForRender: TYPE_USER.ADMIN,
     goTo: routes.blockUser
   },
   {
     name: 'Album',
     icon: <AlbumIcon />,
-    ruleForRender: 'Band',
+    ruleForRender: TYPE_USER.BAND,
     goTo: routes.addAlbum
   },
   {
     name: 'Músicas',
     icon: <LibraryMusicIcon />,
-    ruleForRender: 'Band',
+    ruleForRender: TYPE_USER.BAND,
     goTo: routes.listMusic
   },
   {
     name: 'Adicionar Música',
     icon: <QueueMusicIcon />,
-    ruleForRender: 'Band',
+    ruleForRender: TYPE_USER.BAND,
     goTo: routes.addMusic
   },
   {
     name: 'Música',
     icon: <MusicNoteIcon/>,
-    ruleForRender: 'Listener',
+    ruleForRender: TYPE_USER.LISTENER_NO_PAYING,
     goTo: routes.listMusicUser
   },
   {
     name: 'Gênero',
     icon: <QueueMusicIcon/>,
-    ruleForRender: 'Listener',
+    ruleForRender: TYPE_USER.LISTENER_NO_PAYING,
     goTo: routes.listGenre
   },
 ]
@@ -117,8 +118,6 @@ const TypographyLogo = styled(Typography)`
   font-weight: bold;
 `
 
-const typesUser = 'Listener' || window.localStorage.getItem('role')
-
 const MenuPage = props => {
 
   const goTo = (route) => {
@@ -128,13 +127,13 @@ const MenuPage = props => {
   return (
     <Lists>
         <Head>
-        <Logo src={logo2}/> 
-        <TypographyLogo> 
-          Spotenu 
-        </TypographyLogo>
+          <Logo src={logo2}/> 
+          <TypographyLogo> 
+            Spotenu 
+          </TypographyLogo>
         </Head>
-        { features.map((feature, index) => (
-          feature.ruleForRender === typesUser ?
+        { features.map((feature) => (
+          feature.ruleForRender === (props.role || window.localStorage.getItem('role')) ?
             <ListItem button key={feature.name} onClick={() => goTo(feature.goTo)}>
               <ListIcons>{feature.icon} </ListIcons>
                 <ListItemText primary={<TypographyCustom> {feature.name} </TypographyCustom>} />
@@ -146,8 +145,14 @@ const MenuPage = props => {
   )
 }
 
+const mapStateToProps = state => {
+  return {
+    role: state.login.role
+  }
+}
+
 const mapDispatchToProps = dispatch => ({
   goTo: (route) => dispatch(push(route))
 })
 
-export default connect(null, mapDispatchToProps)(MenuPage)
+export default connect(mapStateToProps, mapDispatchToProps)(MenuPage)
