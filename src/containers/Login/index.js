@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-/* import { login } from '../../actions/login'; */
 import { TextField, Typography, Button } from "@material-ui/core";
 import Divider from '@material-ui/core/Divider';
 import { connect } from "react-redux";
