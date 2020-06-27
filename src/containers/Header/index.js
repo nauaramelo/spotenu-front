@@ -32,6 +32,7 @@ const ExitToAppIconS = styled(ExitToAppIcon)`
 const HeaderPage = (props) => {
     const logout = () => {
         window.localStorage.removeItem('token')
+        window.localStorage.removeItem('role')
         props.setLogged(false)
         props.goToLogin()
     }

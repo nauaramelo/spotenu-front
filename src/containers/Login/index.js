@@ -77,7 +77,7 @@ const Head = styled.div`
 
 const LoginPage = props => {
     const [form, setForm] = useState({
-        emailOrNickname: '',
+        nicknameOrEmail: '',
         password: ''
       })
 
@@ -97,7 +97,6 @@ const LoginPage = props => {
     const onSubmitForm = (event) => {
         event.preventDefault();
         props.login(form.emailOrNickname, form.password)
-        //Lembrar de mudar quando houver outra action
     }
 
     return (
@@ -143,7 +142,7 @@ const LoginPage = props => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    login: (credential, password) => dispatch(login(credential, password)),
+    login: (nicknameOrEmail, password) => dispatch(login(nicknameOrEmail, password)),
     goToSignup: () => dispatch(push(routes.signup))
 })
 
