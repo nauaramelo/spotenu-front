@@ -46,7 +46,7 @@ const FormLogged = (props) => {
                 {props.featureTitle}
             </TypographyCustom>
             { props.fields && props.fields.map(field => (
-                field.type === 'text' ?
+                field.type !== 'select' ?
                     <TextFieldTest key={field.name}
                         variant="outlined"
                         onChange={handleFieldChange}
