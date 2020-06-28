@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from "react-redux";
 import FormLogged from '../../components/FormLogged'
+import { signupAdmin } from '../../actions/user';
 
 const forms = [
     {
@@ -45,10 +46,31 @@ const forms = [
 
 const SignupAdminPage = props => {
 
-    const [state, setState] = useState({})
+    const [state, setState] = useState({
+        name: '',
+        nickname: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    })
 
     const onSubmitForm = (event) => {
         event.preventDefault();
+
+        if (isValidPassword()) {
+            props.signupAdmin(state)
+        }
+
+        clearFields()
+    }
+
+    const isValidPassword = () => {
+        return state.password === state.confirmPassword
+    }
+
+    
+    const clearFields = () => {
+        setState({name: '', nickname: '', email: '', password: '', confirmPassword: '' })
     }
 
     return (
@@ -64,6 +86,8 @@ const SignupAdminPage = props => {
     )
 }
 
-const mapDispatchToProps = dispatch => ({})
+const mapDispatchToProps = dispatch => ({
+    signupAdmin: (form) => dispatch(signupAdmin(form))
+})
 
 export default connect(null, mapDispatchToProps)(SignupAdminPage)
