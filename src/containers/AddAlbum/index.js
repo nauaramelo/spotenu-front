@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import FormLogged from '../../components/FormLogged';
 import { listGenres } from '../../actions/genre';
 import { setLogged } from '../../actions/login'
+import { createAlbum } from '../../actions/album';
 import { push } from 'connected-react-router';
 import { routes } from '../Router';
 
@@ -25,13 +26,9 @@ const AddAlbumPage = (props) => {
     ]
 
     const [state, setState] = useState({
-        genres: []
+        genres: [],
+        name: ''
     })
-
-    const handleFieldChange = (event) => {
-        const fieldName = event.target.name
-        setState({...state, [fieldName]: event.target.value})
-    }
 
     useEffect(() => {
         if (!window.localStorage.getItem('token')) {
@@ -47,7 +44,12 @@ const AddAlbumPage = (props) => {
 
     const onSubmitForm = (event) => {
         event.preventDefault();
-        props.listGenres()
+        props.createAlbum(state)
+        clearFields()
+    }
+
+    const clearFields = () => {
+        setState({ genres: [], name: '' })
     }
 
     return (
@@ -58,7 +60,6 @@ const AddAlbumPage = (props) => {
             state={state}
             setState={setState}
             buttonName={'Criar'}
-            onChange={handleFieldChange}
         />
     )
 }
@@ -72,7 +73,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     listGenres: () => dispatch(listGenres()),
     setLogged: (logged) => dispatch(setLogged(logged)),
-    goToLogin: () => dispatch(push(routes.root))
+    goToLogin: () => dispatch(push(routes.root)),
+    createAlbum: (form) => dispatch(createAlbum(form))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddAlbumPage)

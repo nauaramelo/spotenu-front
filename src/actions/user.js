@@ -7,8 +7,6 @@ const baseUrl = process.env.REACT_APP_BASE_URL
 
 export const signup = (form) => async (dispatch) => {
 
-    const { name, nickname, email, password, confirmPassword } = form
-
     try {
         
        const response = await axios.post(`${baseUrl}/users/signup-listener`, form)

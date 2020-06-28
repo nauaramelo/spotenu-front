@@ -46,6 +46,8 @@ const TextFieldFormLogged = (props) => {
           required={props.required}
           margin="normal"
           variant="outlined"
+          onChange={props.onChange}
+          value={props.value}
           InputLabelProps={{
             classes: {
               root: classes.cssLabel,
