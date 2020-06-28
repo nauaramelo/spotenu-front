@@ -19,3 +19,22 @@ export const signup = (form) => async (dispatch) => {
         alert('Por favor, tentar novamente.')
     }
 }
+
+export const signupAdmin = (form) => async (dispatch) => {
+    const token = window.localStorage.getItem('token')
+
+    try {
+
+        await axios.post(`${baseUrl}/users/signup-admin`, form,
+        {
+            headers: {
+                Authorization: token
+            }
+        })
+
+        alert('Administrador Cadastrado com sucesso.')
+
+    } catch (error) {
+        alert('Por favor, tentar novamente.')
+    }
+}
