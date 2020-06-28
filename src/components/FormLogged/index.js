@@ -35,10 +35,7 @@ const TypographyCustom = styled(Typography)`
 const FormLogged = (props) => {
     const handleFieldChange = (event) => {
         const fieldName = event.target.name
-        console.log('state antes', props.state)
-        console.log(event.target.name, event.target.value)
         props.setState({...props.state, [fieldName]: event.target.value})
-        console.log('state depois', props.state)
     }
 
     return(
@@ -61,7 +58,7 @@ const FormLogged = (props) => {
                     <TextFieldTest key={field.name}
                         select={true}
                         variant="outlined"
-                        onChange={props.onChange || handleFieldChange}
+                        onChange={handleFieldChange}
                         name={field.name}
                         type={field.type}
                         label={field.label}
@@ -72,7 +69,7 @@ const FormLogged = (props) => {
                     />
             ))}
 
-            <Buttons variant="contained" color="primary" onClick={props.actionButton}>
+            <Buttons variant="contained" color="primary"  type="submit" >
                 {props.buttonName}
             </Buttons>
         </Forms>
