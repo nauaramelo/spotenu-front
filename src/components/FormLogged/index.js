@@ -36,6 +36,7 @@ const FormLogged = (props) => {
     const handleFieldChange = (event) => {
         const fieldName = event.target.name
         console.log('state antes', props.state)
+        console.log(event.target.name, event.target.value)
         props.setState({...props.state, [fieldName]: event.target.value})
         console.log('state depois', props.state)
     }
@@ -60,13 +61,14 @@ const FormLogged = (props) => {
                     <TextFieldTest key={field.name}
                         select={true}
                         variant="outlined"
-                        onChange={handleFieldChange}
+                        onChange={props.onChange || handleFieldChange}
                         name={field.name}
                         type={field.type}
                         label={field.label}
                         value={props.state[`${field.name}`]}
                         required={field.required}
                         options={field.options}
+                        multiple={field.multiple}
                     />
             ))}
 

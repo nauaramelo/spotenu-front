@@ -52,10 +52,10 @@ const ListGridComponent = (props) => {
             { props.dataList.map(data => (
                 <div>
                     <ContainerGrid columnsLength={props.headerColumns.length}>
-                        <RowsGrid>{ data }</RowsGrid>
+                        <RowsGrid>{ data.name }</RowsGrid>
                         <ColumnActionsGrid actionLength={ props.actionsColumn ? props.actionsColumn.length : 0 }>
                             { props.actionsColumn && props.actionsColumn.map(actionColumn => (
-                            <IconButtons edge="end" aria-label="delete" onClick={() => actionColumn.action(data)}>
+                            <IconButtons edge="end" aria-label="delete" onClick={() => actionColumn.action(data.id)}>
                                 {actionColumn.icon}
                             </IconButtons>
                             )) }
