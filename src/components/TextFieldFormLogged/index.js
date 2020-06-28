@@ -68,8 +68,8 @@ const TextFieldFormLogged = (props) => {
             onChange: props.onChange
           }}
         >
-        { props.options && props.options.map(genre => {
-            return <MenuItem value={genre.id}>{genre.name}</MenuItem>
+        { props.options && props.options.map(option => {
+            return <MenuItem value={option.id}>{option.name}</MenuItem>
         }) }
         </Text>
     );
