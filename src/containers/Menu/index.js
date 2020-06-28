@@ -70,16 +70,16 @@ const features = [
     goTo: routes.addMusic
   },
   {
+    name: 'Gêneros',
+    icon: <QueueMusicIcon/>,
+    ruleForRender: TYPE_USER.BAND,
+    goTo: routes.listGenre
+  },
+  {
     name: 'Música',
     icon: <MusicNoteIcon/>,
     ruleForRender: TYPE_USER.LISTENER_NO_PAYING,
     goTo: routes.listMusicUser
-  },
-  {
-    name: 'Gênero',
-    icon: <QueueMusicIcon/>,
-    ruleForRender: TYPE_USER.LISTENER_NO_PAYING,
-    goTo: routes.listGenre
   },
 ]
 

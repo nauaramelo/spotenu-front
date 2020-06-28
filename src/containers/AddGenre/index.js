@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from "react-redux";
 import FormLogged from '../../components/FormLogged';
+import { addGenre } from '../../actions/genre';
+import { push } from 'connected-react-router';
+import { routes } from '../Router';
 
 
 const forms = [
@@ -14,10 +17,18 @@ const forms = [
 
 const AddGenrePage = (props) => {
 
-    const [state, setState] = useState({})
+    const [state, setState] = useState({
+        name: ""
+    })
+
+    const handleFieldChange = (event) => {
+        const fieldName = event.target.name
+        setState({...state, [fieldName]: event.target.value})
+    }
 
     const onSubmitForm = (event) => {
         event.preventDefault();
+        props.addGenre(state)
     }
 
     return (
@@ -25,16 +36,19 @@ const AddGenrePage = (props) => {
             <FormLogged 
                 onSubmitForm={onSubmitForm}
                 featureTitle={'Adicionar Gênero'}
+                onChange={handleFieldChange}
                 fields={forms}
-                state={state}
+                state={state.name}
                 setState={setState}
-                actionButton={props.goToHome}
                 buttonName={'Adicionar'}
             />
         </div>
     )
 }
 
-const mapDispatchToProps = dispatch => ({})
+const mapDispatchToProps = dispatch => ({
+    addGenre: (form) => dispatch(addGenre(form)),
+    goToHome: () => dispatch(push(routes.home))
+})
 
 export default connect(null, mapDispatchToProps)(AddGenrePage)

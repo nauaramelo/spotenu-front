@@ -36,13 +36,11 @@ const Text = styled(TextField)`
 
 const TextFieldFormLogged = (props) => {
     const { classes } = props;
-
+    console.log('value', props.value)
     return (
         <Text
           select={props.select || false}
           label={props.label}
-          value={props.value}
-          onChange={props.onChange}
           name={props.name}
           type={props.type}
           required={props.required}
@@ -62,10 +60,15 @@ const TextFieldFormLogged = (props) => {
               notchedOutline: classes.notchedOutline,
             }
           }}
+          SelectProps={{
+            multiple: props.multiple || false,
+            value: props.value,
+            onChange: props.onChange
+          }}
         >
-          { props.options && props.options.map(option => {
-            return (<MenuItem key={option.id} value={option.id}> {option.name} </MenuItem>)
-          }) }
+        { props.options && props.options.map(genre => {
+            return <MenuItem value={genre.id}>{genre.name}</MenuItem>
+        }) }
         </Text>
     );
 }
