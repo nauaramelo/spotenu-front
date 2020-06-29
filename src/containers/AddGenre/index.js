@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import FormLogged from '../../components/FormLogged';
 import { addGenre } from '../../actions/genre';
 import { push } from 'connected-react-router';
 import { routes } from '../Router';
-
+import { setLogged } from '../../actions/login'
 
 const forms = [
     {
@@ -21,10 +21,12 @@ const AddGenrePage = (props) => {
         name: ""
     })
 
-    const handleFieldChange = (event) => {
-        const fieldName = event.target.name
-        setState({...state, [fieldName]: event.target.value})
-    }
+    useEffect(() => {
+        if (!window.localStorage.getItem('token')) {
+            props.setLogged(false)
+            props.goToLogin()
+        }
+    }, [])
 
     const onSubmitForm = (event) => {
         event.preventDefault();
@@ -36,7 +38,6 @@ const AddGenrePage = (props) => {
             <FormLogged 
                 onSubmitForm={onSubmitForm}
                 featureTitle={'Adicionar Gênero'}
-                onChange={handleFieldChange}
                 fields={forms}
                 state={state.name}
                 setState={setState}
@@ -47,6 +48,8 @@ const AddGenrePage = (props) => {
 }
 
 const mapDispatchToProps = dispatch => ({
+    setLogged: (logged) => dispatch(setLogged(logged)),
+    goToLogin: () => dispatch(push(routes.root)),
     addGenre: (form) => dispatch(addGenre(form)),
     goToHome: () => dispatch(push(routes.home))
 })

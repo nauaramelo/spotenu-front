@@ -9,10 +9,7 @@ import ApproveBandPage from '../ApproveBand';
 import AddGenrePage from '../AddGenre';
 import AddMusicPage from '../AddMusic';
 import AddAlbumPage from '../AddAlbum';
-import ListMusicPage from '../ListMusic';
 import ListGenrePage from '../ListGenre';
-import BlockUserPage from '../BlockUser';
-import ListMusicUserPage from '../ListMusicUser';
 
 export const routes = {
     root: "/",
@@ -24,10 +21,7 @@ export const routes = {
     addGenre: "/genre/add",
     listGenre: "/genre/list",
     addMusic: "/music/add",
-    listMusic: "/music/list",
-    listMusicUser: "/music/list-user",
-    addAlbum: "/album/add",
-    blockUser: "/user/block"
+    addAlbum: "/album/add"
 }
 
 function Router(props) {
@@ -42,10 +36,7 @@ function Router(props) {
                 <Route exact path={routes.addGenre} component={AddGenrePage}/>
                 <Route exact path={routes.listGenre} component={ListGenrePage}/>
                 <Route exact path={routes.addMusic} component={AddMusicPage}/>
-                <Route exact path={routes.listMusic} component={ListMusicPage}/>
-                <Route exact path={routes.listMusicUser} component={ListMusicUserPage}/>
                 <Route exact path={routes.addAlbum} component={AddAlbumPage}/>
-                <Route exact path={routes.blockUser} component={BlockUserPage}/>
             </Switch>
         </ConnectedRouter>
     )

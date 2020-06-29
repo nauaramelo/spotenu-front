@@ -19,68 +19,56 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { routes } from '../Router';
 import { push } from 'connected-react-router';
 import { TYPE_USER } from './typeUserEnum'
+import HomeIcon from '@material-ui/icons/Home';
 
 const features = [
   {
+    name: 'Home',
+    icon: <HomeIcon />,
+    rolesForRender: [
+      TYPE_USER.ADMIN,
+      TYPE_USER.LISTENER_NO_PAYING,
+      TYPE_USER.LISTENER_PAYING,
+      TYPE_USER.BAND
+    ],
+    goTo: routes.signupAdm
+  },
+  {
     name: 'Cadastrar Administrador',
     icon: <SupervisorAccountIcon />,
-    ruleForRender: TYPE_USER.ADMIN,
+    rolesForRender: [TYPE_USER.ADMIN],
     goTo: routes.signupAdm
   },
   {
     name: 'Aprovar Bandas',
     icon: <CheckCircleIcon />,
-    ruleForRender: TYPE_USER.ADMIN,
+    rolesForRender: [TYPE_USER.ADMIN],
     goTo: routes.approveBand
   },
   {
     name: 'Listar Gêneros',
     icon: <PlaylistAddCheckIcon />,
-    ruleForRender: TYPE_USER.ADMIN,
+    rolesForRender: [TYPE_USER.ADMIN, TYPE_USER.BAND],
     goTo: routes.listGenre
   },
   {
     name: 'Adicionar Gêneros',
     icon: <PlaylistAddIcon/>,
-    ruleForRender: TYPE_USER.ADMIN,
+    rolesForRender: [TYPE_USER.ADMIN],
     goTo: routes.addGenre
-  },
-  {
-    name: 'Bloquear Usuario',
-    icon: <PersonAddDisabledIcon />,
-    ruleForRender: TYPE_USER.ADMIN,
-    goTo: routes.blockUser
   },
   {
     name: 'Album',
     icon: <AlbumIcon />,
-    ruleForRender: TYPE_USER.BAND,
+    rolesForRender: [TYPE_USER.BAND],
     goTo: routes.addAlbum
-  },
-  {
-    name: 'Músicas',
-    icon: <LibraryMusicIcon />,
-    ruleForRender: TYPE_USER.BAND,
-    goTo: routes.listMusic
   },
   {
     name: 'Adicionar Música',
     icon: <QueueMusicIcon />,
-    ruleForRender: TYPE_USER.BAND,
+    rolesForRender: [TYPE_USER.BAND],
     goTo: routes.addMusic
-  },
-  {
-    name: 'Gêneros',
-    icon: <QueueMusicIcon/>,
-    ruleForRender: TYPE_USER.BAND,
-    goTo: routes.listGenre
-  },
-  {
-    name: 'Música',
-    icon: <MusicNoteIcon/>,
-    ruleForRender: TYPE_USER.LISTENER_NO_PAYING,
-    goTo: routes.listMusicUser
-  },
+  }
 ]
 
 const Head = styled.div`
@@ -93,8 +81,6 @@ const Head = styled.div`
 
 const Logo = styled.img`
   height: 9vh;
-  /* width: 12vh; */
-  /* margin-left: 6vh; */
 `
 
 const Lists = styled(List)`
@@ -124,6 +110,14 @@ const MenuPage = props => {
     props.goTo(route)
   }
 
+  const shouldRender = (rolesForRender) => {
+    const rolesFilter = rolesForRender.filter((role) => {
+      return (props.role || window.localStorage.getItem('role')) === role
+    })
+
+    return rolesFilter.length > 0
+  }
+
   return (
     <Lists>
         <Head>
@@ -133,7 +127,7 @@ const MenuPage = props => {
           </TypographyLogo>
         </Head>
         { features.map((feature) => (
-          feature.ruleForRender === (props.role || window.localStorage.getItem('role')) ?
+          shouldRender(feature.rolesForRender) ?
             <ListItem button key={feature.name} onClick={() => goTo(feature.goTo)}>
               <ListIcons>{feature.icon} </ListIcons>
                 <ListItemText primary={<TypographyCustom> {feature.name} </TypographyCustom>} />

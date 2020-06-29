@@ -1,44 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import FormLogged from '../../components/FormLogged'
 import { signupAdmin } from '../../actions/user';
+import { push } from 'connected-react-router';
+import { routes } from '../Router';
+import { setLogged } from '../../actions/login'
 
 const forms = [
     {
         name: "name",
         type: "text", 
         label: "Nome Completo", 
-        pattern: "^[a-z-A-Z\\s]{3,}$",
         required: true
     },
     {
         name: "nickname",
         type: "text", 
         label: "Nickname", 
-        pattern: "^[a-z-A-Z\\s]{3,}$",
         required: true
     },
     {
         name: "email",
         type: "email", 
-        label: "Email", 
-        pattern: "^[a-z-A-Z\\s]{3,}$",
+        label: "Email",
         required: true
     },
     {
         name: "password",
         type: "text", 
-        label: "Senha", 
-        //Mudar pattern para senha de 6 caracteres
-        pattern: "^[a-z-A-Z\\s]{3,}$",
+        label: "Senha",
         required: true
     },
     {
         name: "confirmPassword",
         type: "text", 
-        label: "Confirmação de senha", 
-        //Mudar pattern para senha de 6 caracteres
-        pattern: "^[a-z-A-Z\\s]{3,}$",
+        label: "Confirmação de senha",
         required: true
     },
 ]
@@ -54,21 +50,28 @@ const SignupAdminPage = props => {
         confirmPassword: ''
     })
 
+    useEffect(() => {
+        if (!window.localStorage.getItem('token')) {
+            props.setLogged(false)
+            props.goToLogin()
+        }
+    }, [])
+
     const onSubmitForm = (event) => {
         event.preventDefault();
 
         if (isValidPassword()) {
             props.signupAdmin(state)
+            clearFields()
+        } else {
+            alert('Senhas diferentes')
         }
-
-        clearFields()
     }
 
     const isValidPassword = () => {
         return state.password === state.confirmPassword
     }
 
-    
     const clearFields = () => {
         setState({name: '', nickname: '', email: '', password: '', confirmPassword: '' })
     }
@@ -80,14 +83,15 @@ const SignupAdminPage = props => {
             fields={forms}
             state={state}
             setState={setState}
-            actionButton={props.goToHome}
             buttonName={'Cadastrar Administrador'}
         />
     )
 }
 
 const mapDispatchToProps = dispatch => ({
-    signupAdmin: (form) => dispatch(signupAdmin(form))
+    signupAdmin: (form) => dispatch(signupAdmin(form)),
+    setLogged: (logged) => dispatch(setLogged(logged)),
+    goToLogin: () => dispatch(push(routes.root))
 })
 
 export default connect(null, mapDispatchToProps)(SignupAdminPage)

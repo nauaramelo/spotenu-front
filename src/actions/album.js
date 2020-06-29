@@ -21,9 +21,11 @@ export const listAlbums = () => async (dispatch) => {
         const token = window.localStorage.getItem('token')
 
         const response = await axios.get(`${baseUrl}/albums/all`, 
-        { headers: {
-            Authorization: token
-        }})
+        {
+            headers: {
+                Authorization: token
+            }
+        })
 
         const albums = response.data.albums
 
