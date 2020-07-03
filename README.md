@@ -87,6 +87,12 @@ Para se logar, o usuário músico pode fornecer o email ou o nickname (junto com
 - Criação de álbuns
 - Criação de músicas
 
+## Deploy
+
+<p align="justify">
+  O deploy do projeto foi realizado no firebase e encontra-se disponivel em: https://spotenu-dd294.web.app/
+</p>
+
 ## Pré-requisitos
 
 :warning: [Node](https://nodejs.org/en/download/)
