@@ -1,68 +1,131 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Labenu | Desenvolvimento Web Full Stack
 
-## Available Scripts
 
-In the project directory, you can run:
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/59856574/86274338-e7bbd280-bba7-11ea-9b0f-312418c0c364.png"/>
+</p>
 
-### `npm start`
+## Frontend do Projeto Spotenu
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/59856574/86313495-9f2e0480-bbfb-11ea-9163-5c5e570cf8c1.PNG"/>
+</p>
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+<p align="center">
+  <img src="https://img.shields.io/static/v1?label=react&message=framework&color=blue&style=for-the-badge&logo=REACT"/>
+  <img src="https://img.shields.io/static/v1?label=firebase&message=deploy&color=yellow&style=for-the-badge&logo=FIREBASE"/>
+  <img src="https://img.shields.io/static/v1?label=redux&message=library&color=purple&style=for-the-badge&logo=REDUX"/>
+  <img src="https://img.shields.io/static/v1?label=javascript&message=language&color=yellow&style=for-the-badge&logo=JAVASCRIPT"/>
+  <img src="http://img.shields.io/static/v1?label=License&message=MIT&color=green&style=for-the-badge"/>
+  <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=RED&style=for-the-badge"/>
+</p>
 
-### `npm test`
+> Status do Projeto: Em desenvolvimento :warning: 
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Descrição do Projeto
 
-### `npm run build`
+<p align="justify"> 
+  Vamos finalizar o curso com chave de ouro fazendo o frontend para simular o Spotify. 
+</p>
+<p align="justify"> 
+  O Spotenu é um projeto que visa facilitar o acesso a músicas pelo mundo. Para isso, vamos dar suporte para dois tipos de usuários: as bandas (ou músicos) e os ouvintes (usuários que consomem as músicas).
+  Além disso, nós vamos montar uma operação com funcionários próprios que precisam gerenciar os dados que circulam no nosso sistema. Eles serão os nossos administradores. 
+</p>
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Usuários Músicos
+<p align="justify">
+  Vamos começar a explicar os usuários que são uma banda. Mesmo que haja músicos solos, nós vamos representar todos eles por uma banda, que deve possuir um nome, um nickname, uma descrição (onde se possa escrever qualquer texto de qualquer tamanho) e uma senha. 
+  Quando uma banda de cadastra, ela precisa esperar que um administrador aprove o seu cadastro para pode utilizar a nossa aplicação. 
+</p>
+<p align="justify">
+  As funcionalidades relacionadas a músicos são: criação, edição e deleção de álbuns; e criação, edição e deleção de músicas. Para criar um álbum, devemos informar o nome e relacioná-lo com um conjunto de gêneros. Um álbum pode ser de mais de um gênero musical. Na edição, é possível alterar o nome do álbum e os gêneros dele. Para criar uma música, os músicos devem informar o nome da música e o álbum a qual ela está relacionada.
+Só é possível alterar o nome da música. Por fim, sobre a deleção de músicas, não há muito o que explicar, mas a de álbuns tem um comportamento importante: ao se deletar um álbum todas as músicas devem ser deletadas também.  
+</p>
+<p align="justify">
+Para se logar, o usuário músico pode fornecer o email ou o nickname (junto com a senha). Caso ele não tenha sido aprovado ainda, ele não deve ser capaz de se logar na aplicação.
+</p>
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+#### Usuários Ouvintes
+<p align="justify">
+  Os ouvintes são divididos em duas categorias: pagantes e não pagantes. 
+  Os não pagantes só podem acessar a funcionalidade de busca da música, que deve fazer uma busca por termos dos nomes das músicas, com filtro de gênero opcional.
+</p>
+<p align="justify">
+  Já os pagantes tem acesso a isso e mais: playlists próprias. Ao criar uma playlist, basta fornecer um nome. Podem ser adicionadas músicas da playlist, ou retira-las. 
+  Todas as playlist são inicialmente privadas e só podem ser modificadas (ou adicionar e retirar músicas) pelo usuário criador. 
+  Ele pode tornar a playlist colaborativa, permitindo que qualquer um a veja; e, então, quem for seguidor da playlist também pode a modificar.
+</p>
+<p align="justify">
+  Um usuário ouvinte deve fornecer o nome, o email, nickname e senha no cadastro. Para logar, ele pode usar tanto o email como o nickname (junto com a senha).  
+</p>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Usuários Administradores 
 
-### `npm run eject`
+<p align="justify">
+  Os usuários administradores são responsáveis pelo gerenciamento do nosso projeto. 
+  Somente um usuário administrador pode cadastrar outro usuário administrador, passando as informações: nome, email, nickname e senha. 
+</p>
+<p align="justify">
+  Eles podem aprovar os músicos (como explicado acima). Além disso, eles também são capazes de adicionar gêneros musicais, passando somente um nome.
+</p>
+<p align="justify">
+  Por fim, há a possibilidade de bloquear qualquer usuário (que não seja um administrador). 
+  Quando um usuário for bloqueado ele não pode mais logar na aplicação. 
+  Para se logar, um administrador pode informar o email ou o nickname (junto com a senha)
+</p>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Funcionalidades
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Signup de usuário ouvinte
+- Signup de bandas
+- Cadastro de administrador
+- Ver todas as bandas 
+- Aprovação de bandas
+- Login
+- Adicionar Gênero
+- Ver gêneros músicias
+- Criação de álbuns
+- Criação de músicas
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Pré-requisitos
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+:warning: [Node](https://nodejs.org/en/download/)
 
-## Learn More
+:warning: [Npm](https://www.npmjs.com/)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Como rodar a aplicação :arrow_forward:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+No terminal, clone o projeto: 
 
-### Code Splitting
+```
+git clone https://github.com/nauaramelo/spotenu-front.git
+```
+Entre no projeto e instale as dependências através do comando:
+```
+npm install
+```
+Por últomo, suba a aplicação: 
+```
+npm start
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Linguagens, dependencias e libs utilizadas :books:
 
-### Analyzing the Bundle Size
+- [Node](https://nodejs.org/en/)
+- [React](https://pt-br.reactjs.org/)
+- [Redux](https://redux.js.org/)
+- [Styled Components](https://styled-components.com/)
+- [Axios](https://alligator.io/react/axios-react/)
+- [Material ui](https://material-ui.com/pt/)
+- [Firebase](https://firebase.google.com/)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+## Desenvolvido Por :octocat:
 
-### Making a Progressive Web App
+| [<img src="https://user-images.githubusercontent.com/59856574/86283681-d11d7780-bbb7-11ea-90a5-9312ee67cdec.jpg" width=115><br><sub>Nauara Melo</sub>](https://www.linkedin.com/in/nauara-melo-mayer-464a82135/) | 
+| :---: |
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## Licença 
 
-### Advanced Configuration
+[MIT License](https://opensource.org/licenses/MIT)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Copyright :copyright: 2020 - Spotenu
