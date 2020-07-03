@@ -132,6 +132,6 @@ npm start
 
 ## Licença 
 
-[MIT License](https://opensource.org/licenses/MIT)
+[MIT License](https://github.com/nauaramelo/spotenu-front/blob/master/LICENSE)
 
 Copyright :copyright: 2020 - Spotenu
